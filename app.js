@@ -6,11 +6,14 @@ const mongoose = require("mongoose");
 const Card = require("./models/card");
 const User = require("./models/user");
 const port = process.env.PORT || 3000;
+const routes = require("./routes");
 
 const cards = {};
 //
 require("dotenv").config();
 app.engine("ejs", require("ejs").renderFile);
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 //
 app.use(express.static(__dirname + "/views"));
@@ -18,13 +21,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(routes);
 //
 app.get("/", function (req, res) {
   let error = "";
   res.render("index", { error });
 });
-
-
 
 const start = async () => {
   try {
