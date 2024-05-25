@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/assets/css/main.css" />
-    <title>HamsterCalculator</title>
-  </head>
-  <body>
-    
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamster Kombat Card Calculator</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Hamster Kombat Card Calculator</h1>
+        <form action="/calculate" method="POST">
+            <label for="username">Choose account:</label>
+            <select name="username" id="username">
+                <option value="Vitya">Vitya</option>
+                <option value="Max">Max</option>
+            </select>
+            <button type="submit">Next</button>
+        </form>
+    </div>
+</body>
 </html>
