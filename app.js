@@ -4,6 +4,7 @@ const ejs = require("ejs");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Card = require("./models/card");
+const User = require("./models/user");
 const port = process.env.PORT || 3000;
 
 const cards = {};
@@ -21,6 +22,26 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get("/", function (req, res) {
   let error = "";
   res.render("index", { error });
+});
+
+app.post("/cards", (req, res) => {
+  const accountId = req.body.username;
+  res.redirect(`/cards/${accountId}`);
+});
+
+app.get("/cards/:accountId", async (req, res) => {
+  const accountId = req.params.accountId;
+  try {
+    const user = await User.findOne({ username: accountId });
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    const cards = await Card.find({ accountId });
+    res.render("cards", { accountId, cards });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 // Створіть функцію для оновлення карточки
@@ -63,6 +84,21 @@ function updateCard(accountId, cardId) {
     .then((response) => response.redirect(`/cards/${accountId}`))
     .catch((error) => console.error(error));
 }
+
+
+app.post("/create-user", async (req, res) => {
+  const { username } = req.body;
+  const user = new User({ username });
+  try {
+    await user.save();
+    res.send(`User created successfully`);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error creating user");
+  }
+});
+
+
 
 const start = async () => {
   try {
