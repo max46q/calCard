@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Карточки</title>
+    <style>
+      /* Додайте стиль для таблиці */
+      table {
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Карточки для акаунту <%= accountId %></h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Назва карточки</th>
+          <th>Рівень</th>
+          <th>Ціна</th>
+          <th>Наступний дохід</th>
+          <th>Редагувати</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% Object.keys(cards).forEach((cardId) => { %>
+        <tr>
+          <td><%= cardId %></td>
+          <td>
+            <input
+              type="number"
+              value="<%= cards[cardId].level %>"
+              id="level-<%= cardId %>"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              value="<%= cards[cardId].price %>"
+              id="price-<%= cardId %>"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              value="<%= cards[cardId].nextIncome %>"
+              id="nextIncome-<%= cardId %>"
+            />
+          </td>
+          <td>
+            <button onclick="updateCard('<%= accountId %>', '<%= cardId %>')">
+              Оновити
+            </button>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+
+    <script>
+      function updateCard(accountId, cardId) {
+        const level = document.getElementById(`level-${cardId}`).value;
+        const price = document.getElementById(`price-${cardId}`).value;
+        const nextIncome = document.getElementById(
+          `nextIncome-${cardId}`
+        ).value;
+
+        fetch(`/cards/${accountId}/${cardId}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ level, price, nextIncome }),
+        })
+          .then((response) => response.redirect(`/cards/${accountId}`))
+          .catch((error) => console.error(error));
+      }
+    </script>
+  </body>
+</html>

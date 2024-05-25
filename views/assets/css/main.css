@@ -69,3 +69,12 @@ button:hover {
   width: 200px;
   text-align: left;
 }
+
+/* Додайте стиль для таблиці */
+table {
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
