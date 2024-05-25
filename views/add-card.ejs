@@ -19,6 +19,16 @@
       <label>Додатковий прибуток:</label>
       <input type="number" name="bonus" required /><br /><br />
       <button type="submit">Додати карточку</button>
+      <input type="hidden" name="accountId" value="<%= account._id %>" />
     </form>
+    <% if (account && account._id) { %>
+    <button
+      type="submit"
+      formaction="/cards/<%= account._id %>"
+      formmethod="post"
+    >
+      Create Card
+    </button>
+    <% } %>
   </body>
 </html>
