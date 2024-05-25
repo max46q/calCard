@@ -30,9 +30,9 @@ app.get("/", function (req, res) {
 });
 
 let currentAccountIndex = 0;
+const accounts = ["account1", "account2"]; // список ваших акаунтів
 
 function nextAccount() {
-  const accounts = ["account1", "account2"]; // список ваших акаунтів
   currentAccountIndex = (currentAccountIndex + 1) % accounts.length;
   const accountId = accounts[currentAccountIndex];
   window.location.href = `account.html?accountId=${accountId}`;

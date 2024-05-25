@@ -25,9 +25,8 @@
       </form>
 
       <script>
-        const accountId = new URLSearchParams(window.location.search).get(
-          "accountId"
-        );
+        const urlParams = new URLSearchParams(window.location.search);
+        const accountId = urlParams.get("accountId");
         document.title = `Додати карточку до акаунту ${accountId}`;
       </script>
     </div>
